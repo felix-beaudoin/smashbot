@@ -3,7 +3,7 @@ import json
 import os
 from discord import app_commands
 from discord.ext import commands
-from glicko2 import Player
+from glicko2.glicko2 import Player
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -83,12 +83,12 @@ async def leaderboard(interaction: discord.Interaction):
         await interaction.response.send_message("Aucun joueur enregistré encore.")
         return
 
+        
     sorted_players = sorted(
         bot.players.items(),
         key=lambda item: (item[1].rating - (2*item[1].rd)),
-        reverse=True
-    )
-
+        reverse=True)
+    
     lines = []
     for rank, (discord_id, player) in enumerate(sorted_players, start=1):
         name = await get_display_name(interaction, discord_id)
